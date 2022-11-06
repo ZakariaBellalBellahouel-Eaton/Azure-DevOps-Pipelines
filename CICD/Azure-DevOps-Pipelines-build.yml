@@ -1,0 +1,27 @@
+  # Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- script: |
+      # Activate command tracing
+      set -o xtrace
+      sudo cp /proc/$(sudo lxc-info -n SmpBuildApplication -p -H)/root/usr/local/share/pxmc3000/SmpDataAgent/bin/linux-debug/SmpDataAgent/SmpDataAgent $(Build.ArtifactStagingDirectory)/$(PXMC3000-data-agent-file-name)
+      if [[ $(sudo lxc-info SmpBuildApplication -s -H) == "RUNNING" ]]; then 
+        sudo lxc-stop SmpBuildApplication
+      fi
+      sudo lxc-destroy SmpBuildApplication
+  displayName: 'Copy scripts'
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: '$(PXMC3000-data-agent-file-name)'
+    publishLocation: 'Container'
+  displayName: 'Publish Scripts'
