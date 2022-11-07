@@ -11,7 +11,7 @@ if [  ! $(dpkg -l | grep ca-certificates | grep ii 2>/dev/null) ]; then
 fi
 
 # Install caCopy the Eaton certificate and loadit
-sudo cp $(EatonCertificate.secureFilePath)  /root/usr/local/share/ca-certificates/
+sudo cp $EATONCERTIFICATE_SECUREFILEPATH  /root/usr/local/share/ca-certificates/
 
 # Update the certificate
 update-ca-certificates
