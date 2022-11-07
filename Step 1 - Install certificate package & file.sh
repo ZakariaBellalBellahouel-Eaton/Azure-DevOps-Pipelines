@@ -1,6 +1,13 @@
 # Activate command print
 set -o xtrace
 
+echo "$[variables.var] : "
+echo $[variables.var]
+echo "$(variables.var) : "
+echo $(variables.var)
+echo "$[variables.var] : "
+echo ${{variables.var}}
+
 # Check if sudo lib is installed, if not, install it
 sudo lxc-attach -n ${{ContainerName}} -- bash -c '
     set -o xtrace
@@ -10,8 +17,8 @@ sudo lxc-attach -n ${{ContainerName}} -- bash -c '
     fi'
 
 # Install caCopy the Eaton certificate and loadit
-sudo cp $(EatonCertificate.secureFilePath)  /proc/$(sudo lxc-info -n SmpApplication -p -H)/root/usr/local/share/ca-certificates/
-sudo cp $(EatonCertificate.secureFilePath)  /proc/$(sudo lxc-info -n SmpApplication -p -H)/root/$(ContainerCertificateDirectory)
+sudo cp $(EatonCertificate.secureFilePath)  /proc/$(sudo lxc-info -n ${{ContainerName}} -p -H)/root/usr/local/share/ca-certificates/
+sudo cp $(EatonCertificate.secureFilePath)  /proc/$(sudo lxc-info -n ${{ContainerName}} -p -H)/root/$(ContainerCertificateDirectory)
 sudo lxc-attach -n $(ContainerName) -- bash -c '
     set -o xtrace
     update-ca-certificates'
