@@ -14,7 +14,7 @@ steps:
       ls /home/vsts/work/1/s
       # Activate command tracing
       set -o xtrace
-      sudo cp R /home/vsts/work/1/s/* $(Build.ArtifactStagingDirectory)/Azure-DevOps-Release-Pipelines
+      sudo cp R /home/vsts/work/1/s/* $(Build.ArtifactStagingDirectory)/Azure-DevOps-Release-Pipelines/
   displayName: 'Copy scripts'
 - task: PublishBuildArtifacts@1
   inputs:
