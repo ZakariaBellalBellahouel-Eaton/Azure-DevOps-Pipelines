@@ -1,0 +1,24 @@
+  # Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- script: |
+      # Activate command tracing
+      set -o xtrace
+      mkdir $(Build.ArtifactStagingDirectory)/Azure-DevOps-Release-Pipelines/
+      sudo cp -R /home/vsts/work/1/s/* $(Build.ArtifactStagingDirectory)/Azure-DevOps-Release-Pipelines/
+  displayName: 'Copy scripts'
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'Azure-DevOps-Release-Pipelines'
+    publishLocation: 'Container'
+  displayName: 'Publish Scripts'
