@@ -3,6 +3,7 @@ set -o xtrace
 
 # Install updates & upgrades
 sudo lxc-attach -n $CONTAINERNAME -- bash -c '
+set -o xtrace
 apt update -y
 apt upgrade -y'
 
