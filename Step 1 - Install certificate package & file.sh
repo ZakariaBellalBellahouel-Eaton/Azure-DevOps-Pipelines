@@ -2,7 +2,7 @@
 set -o xtrace
 
 # Check if sudo lib is installed, if not, install it
-sudo lxc-attach -n $(ContainerName) -- bash -c '
+sudo lxc-attach -n ${{ContainerName}} -- bash -c '
     set -o xtrace
     if [  ! $(dpkg -l | grep ca-certificates | grep ii 2>/dev/null) ]; then
         sudo apt update -y
