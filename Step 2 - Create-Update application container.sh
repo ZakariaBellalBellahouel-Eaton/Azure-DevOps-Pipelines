@@ -74,9 +74,4 @@ do
     WaitingIpIterator=$((WaitingIpIterator+1))
 done
 
-# Install updates & upgrades
-sudo lxc-attach -n $CONTAINERNAME -- bash -c '
-apt update -y
-apt upgrade -y'
-
 # Todo : If the ip not available after all this time, stop the release deployment and raise error
