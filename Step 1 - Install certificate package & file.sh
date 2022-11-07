@@ -1,12 +1,12 @@
 # Activate command print
 set -o xtrace
 
-echo "$[variables.var] : "
-echo $[variables.var]
-echo "$(variables.var) : "
-echo $(variables.var)
-echo "$[variables.var] : "
-echo ${{variables.var}}
+echo "$[ContainerName] : "
+echo $[ContainerName]
+echo "$(ContainerName) : "
+echo $(ContainerName)
+echo "$[ContainerName] : "
+echo ${{ContainerName}}
 
 # Check if sudo lib is installed, if not, install it
 sudo lxc-attach -n ${{ContainerName}} -- bash -c '
