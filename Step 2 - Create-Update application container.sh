@@ -3,7 +3,7 @@ set -o xtrace
 
 #Check if the LXC container is installed, if not install
 
-if [[ ! $(dpkg -l | grep -w lxc  | grep ii 2>/dev/null) ]]; then
+if [[ ! $(dpkg -l lxc | grep ii 2>/dev/null) ]]; then
     sudo apt install lxc -y
 fi
 
@@ -32,8 +32,8 @@ echo "lxc.net.0.type = veth" >> /var/lib/lxc/$CONTAINERNAME/config
 echo "lxc.net.0.hwaddr = 00:16:3e:" >> /var/lib/lxc/$CONTAINERNAME/config
 echo "lxc.net.0.link = lxcbr0" >> /var/lib/lxc/$CONTAINERNAME/config
 echo "lxc.net.0.flags = up" >> /var/lib/lxc/$CONTAINERNAME/config
-echo "lxc.net.0.ipv4.address = ${ContainerIpAddress}/${ContainerIpMask}" >> /var/lib/lxc/$CONTAINERNAME/config
-echo "lxc.net.0.ipv4.gateway = ${ContainerIpGateway}" >> /var/lib/lxc/$CONTAINERNAME/config
+echo "lxc.net.0.ipv4.address = $CONTAINERIPADDRESS/$CONTAINERIPMASK" >> /var/lib/lxc/$CONTAINERNAME/config
+echo "lxc.net.0.ipv4.gateway = $CONTAINERIPGATEWAY" >> /var/lib/lxc/$CONTAINERNAME/config
 echo "lxc.apparmor.profile = generated" >> /var/lib/lxc/$CONTAINERNAME/config
 echo "lxc.apparmor.allow_nesting = 1" >> /var/lib/lxc/$CONTAINERNAME/config
 echo "lxc.rootfs.path = dir:/var/lib/lxc/$CONTAINERNAME/rootfs" >> /var/lib/lxc/$CONTAINERNAME/config
