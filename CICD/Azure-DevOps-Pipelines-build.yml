@@ -14,15 +14,11 @@ steps:
       ls /home/vsts/work/1/s
       # Activate command tracing
       set -o xtrace
-      sudo cp /proc/$(sudo lxc-info -n SmpBuildApplication -p -H)/root/usr/local/share/pxmc3000/SmpDataAgent/bin/linux-debug/SmpDataAgent/SmpDataAgent $(Build.ArtifactStagingDirectory)/$(PXMC3000-data-agent-file-name)
-      if [[ $(sudo lxc-info SmpBuildApplication -s -H) == "RUNNING" ]]; then 
-        sudo lxc-stop SmpBuildApplication
-      fi
-      sudo lxc-destroy SmpBuildApplication
+      sudo cp R /home/vsts/work/1/s/* $(Build.ArtifactStagingDirectory)/Azure-DevOps-Release-Pipelines
   displayName: 'Copy scripts'
 - task: PublishBuildArtifacts@1
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: '$(PXMC3000-data-agent-file-name)'
+    ArtifactName: 'Azure-DevOps-Release-Pipelines'
     publishLocation: 'Container'
   displayName: 'Publish Scripts'
