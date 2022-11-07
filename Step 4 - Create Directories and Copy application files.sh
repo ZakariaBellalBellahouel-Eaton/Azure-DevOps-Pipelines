@@ -2,39 +2,39 @@
 set -o xtrace
 
 # Create the application directories
-sudo lxc-attach -n $(ContainerName) -- bash -c '
+sudo lxc-attach -n $CONTAINERNAME -- bash -c '
     set -o xtrace
-    if [ ! -d "$(ContainerDataAgentDirectory)/bin" ]; then 
-        install -o $(ContainerPXMC3000Username) -g $(ContainerPXMC3000Username)  -d $(ContainerDataAgentDirectory)/bin 
+    if [ ! -d "$CONTAINERDATAAGENTDIRECTORY/bin" ]; then
+        install -o $(ContainerPXMC3000Username) -g $(CONTAINERPXMC3000USERNAME)  -d $CONTAINERDATAAGENTDIRECTORY/bin
     fi
-    if [ ! -d "$(ContainerDataAgentDirectory)/log" ]; then 
-        install -o $(ContainerPXMC3000Username) -g $(ContainerPXMC3000Username)  -d $(ContainerDataAgentDirectory)/log 
+    if [ ! -d "$CONTAINERDATAAGENTDIRECTORY/log" ]; then
+        install -o $CONTAINERPXMC3000USERNAME -g $CONTAINERPXMC3000USERNAME  -d $CONTAINERDATAAGENTDIRECTORY/log
     fi
-    if [ ! -d "$(ContainerWebClientDirectory)" ]; then 
-        install -o $(ContainerPXMC3000Username) -g $(ContainerPXMC3000Username)  -d $(ContainerWebClientDirectory)
+    if [ ! -d "$CONTAINERWEBCLIENTDIRECTORY" ]; then
+        install -o $CONTAINERPXMC3000USERNAME -g $CONTAINERPXMC3000USERNAME  -d $CONTAINERWEBCLIENTDIRECTORY
     fi
-    if [ ! -d "$(ContainerWebServerDirectory)" ]; then 
-        install -o $(ContainerPXMC3000Username) -g $(ContainerPXMC3000Username)  -d $(ContainerWebServerDirectory) 
+    if [ ! -d "$CONTAINERWEBSERVERDIRECTORY" ]; then
+        install -o $CONTAINERPXMC3000USERNAME -g $CONTAINERPXMC3000USERNAME  -d $CONTAINERWEBSERVERDIRECTORY
     fi
-    if [ ! -d "$(ContainerDatabaseDirectory)" ]; then 
-        install -o $(ContainerPXMC3000Username) -g $(ContainerPXMC3000Username)  -d $(ContainerDatabaseDirectory) 
+    if [ ! -d "$CONTAINERDATABASEDIRECTORY" ]; then
+        install -o $ContainerPXMC3000Username -g $CONTAINERPXMC3000USERNAME  -d $CONTAINERDATABASEDIRECTORY
     fi
-    if [ ! -d "$(ContainerCertificateDirectory)" ]; then 
-        install -o $(ContainerPXMC3000Username) -g $(ContainerPXMC3000Username)  -d $(ContainerCertificateDirectory)
-    fi'
+    if [ ! -d "$CONTAINERCERTIFICATEDIRECTORY" ]; then
+        install -o $CONTAINERPXMC3000USERNAME -g $CONTAINERPXMC3000USERNAME  -d $CONTAINERCERTIFICATEDIRECTORY
+fi'
 
 
 #  Copy PXMC3000-data-agent files
-cp -R $(System.ArtifactsDirectory)/PXMC3000-data-agent/PXMC3000-data-agent  /proc/$(sudo lxc-info -n $(ContainerName) -p -H)/root/$(ContainerDataAgentDirectory)/PXMC3000-data-agent
+cp -R $(System.ArtifactsDirectory)/PXMC3000-data-agent/PXMC3000-data-agent  /proc/$(sudo lxc-info -n $CONTAINERNAME -p -H)/root/$CONTAINERDATAAGENTDIRECTORY/PXMC3000-data-agent
 # Copy PXMC3000-web-server files
-cp -R $(System.ArtifactsDirectory)/PXMC3000-web-server/PXMC3000-web-server.js  /proc/$(sudo lxc-info -n $(ContainerName) -p -H)/root/$(ContainerWebServerDirectory)/PXMC3000-web-server.js
+cp -R $(System.ArtifactsDirectory)/PXMC3000-web-server/PXMC3000-web-server.js  /proc/$(sudo lxc-info -n $CONTAINERNAME -p -H)/root/$CONTAINERWEBSERVERDIRECTORY/PXMC3000-web-server.js
 # Copy PXMC3000-web-client files
-cp -R $(System.ArtifactsDirectory)/PXMC3000-web-client/PXMC3000-web-client/.  /proc/$(sudo lxc-info -n $(ContainerName) -p -H)/root/$(ContainerWebClientDirectory)
+cp -R $(System.ArtifactsDirectory)/PXMC3000-web-client/PXMC3000-web-client/.  /proc/$(sudo lxc-info -n $CONTAINERNAME -p -H)/root/$CONTAINERWEBCLIENTDIRECTORY
 
 
- # Set permission
+# Set permission
 
- sudo lxc-attach -n $(ContainerName) -- bash -c '
+sudo lxc-attach -n $CONTAINERNAME -- bash -c '
     set -o xtrace
-    chown -R $(ContainerPXMC3000Username):$(ContainerPXMC3000Username) $(ContainerPXMC3000HomeFolder)
-    chmod -R 744 $(ContainerPXMC3000HomeFolder)'
+    chown -R $CONTAINERPXMC3000USERNAME:$CONTAINERPXMC3000USERNAME $CONTAINERPXMC3000HOMEFOLDER
+chmod -R 744 $CONTAINERPXMC3000HOMEFOLDER'

@@ -3,64 +3,64 @@ set -o xtrace
 
 # Install the PXMC3000 data agent service
 #Check if the service is running, if so stop it.
-sudo lxc-attach -n $(ContainerName) -- bash -c '
-    if [[ $(systemctl is-active  $(ContainerPXMC3000DataAgentServiceName) | grep -w active) ]]; then
-        systemctl stop $(ContainerPXMC3000DataAgentServiceName)
+sudo lxc-attach -n $CONTAINERNAME -- bash -c '
+    if [[ $(systemctl is-active  $CONTAINERPXMC3000DATAAGENTSERVICENAME | grep -w active) ]]; then
+        systemctl stop $CONTAINERPXMC3000DATAAGENTSERVICENAME
     fi'
 
-sudo lxc-attach -n $(ContainerName) -- bash -c '
-#Create the service $(ContainerPXMC3000DataAgentServiceName)
-echo "[Unit]" > /etc/systemd/system/$(ContainerPXMC3000DataAgentServiceName).service
-echo "Description=Smp Rest API Client that runs in regular interval to retrieve the data and save it in database." >> /etc/systemd/system/$(ContainerPXMC3000DataAgentServiceName).service
-echo ""  >>  /etc/systemd/system/$(ContainerPXMC3000DataAgentServiceName).service
-echo "[Install]" >>  /etc/systemd/system/$(ContainerPXMC3000DataAgentServiceName).service
-echo "WantedBy=multi-user.target" >>  /etc/systemd/system/$(ContainerPXMC3000DataAgentServiceName).service
-echo "Alias=SmpDataAgent.service" >>  /etc/systemd/system/$(ContainerPXMC3000DataAgentServiceName).service
-echo "" >>  /etc/systemd/system/$(ContainerPXMC3000DataAgentServiceName).service
-echo "[Service]" >>  /etc/systemd/system/$(ContainerPXMC3000DataAgentServiceName).service
-echo "Type=simple" >>  /etc/systemd/system/$(ContainerPXMC3000DataAgentServiceName).service
-echo "ExecStart=$(ContainerDataAgentDirectory)/bin/SmpDataAgent" >>  /etc/systemd/system/$(ContainerPXMC3000DataAgentServiceName).service
-echo "WorkingDirectory=$(ContainerDataAgentDirectory)" >>  /etc/systemd/system/$(ContainerPXMC3000DataAgentServiceName).service
-echo "#StandardOutput=syslog" >>  /etc/systemd/system/$(ContainerPXMC3000DataAgentServiceName).service
-echo "#StandardError=syslog" >>  /etc/systemd/system/$(ContainerPXMC3000DataAgentServiceName).service
-echo "SyslogIdentifier=SmpDataAgent" >>  /etc/systemd/system/$(ContainerPXMC3000DataAgentServiceName).service'
+sudo lxc-attach -n $CONTAINERNAME -- bash -c '
+#Create the service $CONTAINERPXMC3000DATAAGENTSERVICENAME
+echo "[Unit]" > /etc/systemd/system/$CONTAINERPXMC3000DATAAGENTSERVICENAME.service
+echo "Description=Smp Rest API Client that runs in regular interval to retrieve the data and save it in database." >> /etc/systemd/system/$CONTAINERPXMC3000DATAAGENTSERVICENAME.service
+echo ""  >>  /etc/systemd/system/$CONTAINERPXMC3000DATAAGENTSERVICENAME.service
+echo "[Install]" >>  /etc/systemd/system/$CONTAINERPXMC3000DATAAGENTSERVICENAME.service
+echo "WantedBy=multi-user.target" >>  /etc/systemd/system/$CONTAINERPXMC3000DATAAGENTSERVICENAME.service
+echo "Alias=SmpDataAgent.service" >>  /etc/systemd/system/$CONTAINERPXMC3000DATAAGENTSERVICENAME.service
+echo "" >>  /etc/systemd/system/$CONTAINERPXMC3000DATAAGENTSERVICENAME.service
+echo "[Service]" >>  /etc/systemd/system/$CONTAINERPXMC3000DATAAGENTSERVICENAME.service
+echo "Type=simple" >>  /etc/systemd/system/$CONTAINERPXMC3000DATAAGENTSERVICENAME.service
+echo "ExecStart=$CONTAINERDATAAGENTDIRECTORY/bin/SmpDataAgent" >>  /etc/systemd/system/$CONTAINERPXMC3000DATAAGENTSERVICENAME.service
+echo "WorkingDirectory=$CONTAINERDATAAGENTDIRECTORY" >>  /etc/systemd/system/$CONTAINERPXMC3000DATAAGENTSERVICENAME.service
+echo "#StandardOutput=syslog" >>  /etc/systemd/system/$CONTAINERPXMC3000DATAAGENTSERVICENAME.service
+echo "#StandardError=syslog" >>  /etc/systemd/system/$CONTAINERPXMC3000DATAAGENTSERVICENAME.service
+echo "SyslogIdentifier=SmpDataAgent" >>  /etc/systemd/system/$CONTAINERPXMC3000DATAAGENTSERVICENAME.service'
 
 # Enable and start the service
-sudo lxc-attach -n SmpApplication -- bash -c '
+sudo lxc-attach -n $CONTAINERNAME -- bash -c '
 # Enable the service
-systemctl enable $(ContainerPXMC3000DataAgentServiceName).service 
+systemctl enable $CONTAINERPXMC3000DATAAGENTSERVICENAME.service 
 # Start the service
-systemctl start $(ContainerPXMC3000DataAgentServiceName).service'
+systemctl start $CONTAINERPXMC3000DATAAGENTSERVICENAME.service'
 
 # Install the PXMC3000 web server service
 #Check if the service is running, if so stop it.
 
 #Check if the service is running, if so stop it.
-sudo lxc-attach -n $(ContainerName) -- bash -c '
-    if [[ $(systemctl is-active  $(ContainerPXMC3000WebServerServiceName) | grep -w active) ]]; then
-        systemctl stop $(ContainerPXMC3000WebServerServiceName)
+sudo lxc-attach -n $CONTAINERNAME -- bash -c '
+    if [[ $(systemctl is-active  $CONTAINERPXMC3000WEBSERVERSERVICENAME | grep -w active) ]]; then
+        systemctl stop $CONTAINERPXMC3000WEBSERVERSERVICENAME
     fi'
 
-sudo lxc-attach -n $(ContainerName) -- bash -c '
-#Create the service $(ContainerPXMC3000WebServerServiceName)
-echo "[Unit]" > /etc/systemd/system/$(ContainerPXMC3000WebServerServiceName).service
-echo "Description=Smp Rest API Client that runs in regular interval to retrieve the data and save it in database." >> /etc/systemd/system/$(ContainerPXMC3000WebServerServiceName).service
-echo ""  >>  /etc/systemd/system/$(ContainerPXMC3000WebServerServiceName).service
-echo "[Install]" >>  /etc/systemd/system/$(ContainerPXMC3000WebServerServiceName).service
-echo "WantedBy=multi-user.target" >>  /etc/systemd/system/$(ContainerPXMC3000WebServerServiceName).service
-echo "Alias=SmpDataAgent.service" >>  /etc/systemd/system/$(ContainerPXMC3000WebServerServiceName).service
-echo "" >>  /etc/systemd/system/$(ContainerPXMC3000WebServerServiceName).service
-echo "[Service]" >>  /etc/systemd/system/$(ContainerPXMC3000WebServerServiceName).service
-echo "Type=simple" >>  /etc/systemd/system/$(ContainerPXMC3000WebServerServiceName).service
-echo "ExecStart=$(ContainerWebServerDirectory)/bin/SmpDataAgent" >>  /etc/systemd/system/$(ContainerPXMC3000WebServerServiceName).service
-echo "WorkingDirectory=$(ContainerWebServerDirectory)" >>  /etc/systemd/system/$(ContainerPXMC3000WebServerServiceName).service
-echo "#StandardOutput=syslog" >>  /etc/systemd/system/$(ContainerPXMC3000WebServerServiceName).service
-echo "#StandardError=syslog" >>  /etc/systemd/system/$(ContainerPXMC3000WebServerServiceName).service
-echo "SyslogIdentifier=SmpDataAgent" >>  /etc/systemd/system/$(ContainerPXMC3000WebServerServiceName).service'
+sudo lxc-attach -n $CONTAINERNAME -- bash -c '
+#Create the service $CONTAINERPXMC3000WEBSERVERSERVICENAME
+echo "[Unit]" > /etc/systemd/system/$CONTAINERPXMC3000WEBSERVERSERVICENAME.service
+echo "Description=Smp Rest API Client that runs in regular interval to retrieve the data and save it in database." >> /etc/systemd/system/$CONTAINERPXMC3000WEBSERVERSERVICENAME.service
+echo ""  >>  /etc/systemd/system/$CONTAINERPXMC3000WEBSERVERSERVICENAME.service
+echo "[Install]" >>  /etc/systemd/system/$CONTAINERPXMC3000WEBSERVERSERVICENAME.service
+echo "WantedBy=multi-user.target" >>  /etc/systemd/system/$CONTAINERPXMC3000WEBSERVERSERVICENAME.service
+echo "Alias=SmpDataAgent.service" >>  /etc/systemd/system/$CONTAINERPXMC3000WEBSERVERSERVICENAME.service
+echo "" >>  /etc/systemd/system/$CONTAINERPXMC3000WEBSERVERSERVICENAME.service
+echo "[Service]" >>  /etc/systemd/system/$CONTAINERPXMC3000WEBSERVERSERVICENAME.service
+echo "Type=simple" >>  /etc/systemd/system/$CONTAINERPXMC3000WEBSERVERSERVICENAME.service
+echo "ExecStart=$CONTAINERWEBSERVERDIRECTORY/bin/SmpDataAgent" >>  /etc/systemd/system/$CONTAINERPXMC3000WEBSERVERSERVICENAME.service
+echo "WorkingDirectory=$CONTAINERWEBSERVERDIRECTORY" >>  /etc/systemd/system/$CONTAINERPXMC3000WEBSERVERSERVICENAME.service
+echo "#StandardOutput=syslog" >>  /etc/systemd/system/$CONTAINERPXMC3000WEBSERVERSERVICENAME.service
+echo "#StandardError=syslog" >>  /etc/systemd/system/$CONTAINERPXMC3000WEBSERVERSERVICENAME.service
+echo "SyslogIdentifier=SmpDataAgent" >>  /etc/systemd/system/$CONTAINERPXMC3000WEBSERVERSERVICENAME.service'
 
 # Enable and start the service
-sudo lxc-attach -n SmpApplication -- bash -c '
+sudo lxc-attach -n $CONTAINERNAME -- bash -c '
 # Enable the service
-systemctl enable $(ContainerPXMC3000WebServerServiceName).service 
+systemctl enable $CONTAINERPXMC3000WEBSERVERSERVICENAME.service 
 # Start the service
-systemctl start $(ContainerPXMC3000WebServerServiceName).service'
+systemctl start $CONTAINERPXMC3000WEBSERVERSERVICENAME.service'
