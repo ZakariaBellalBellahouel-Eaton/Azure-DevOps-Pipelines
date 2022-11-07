@@ -9,8 +9,8 @@ apt upgrade -y'
 # Check if sudo lib is installed, if not, install it
 sudo lxc-attach -n $CONTAINERNAME -- bash -c '
     set -o xtrace
-    if [  ! $(dpkg -l | grep ca-certificates | grep ii 2>/dev/null) ]; then
-        sudo apt install ca-certificates -y
+    if [[ ! $(dpkg -l ca-certificates | grep ii 2>/dev/null) ]]; then
+        apt install ca-certificates -y
     fi'
 
 # Install caCopy the Eaton certificate and loadit
