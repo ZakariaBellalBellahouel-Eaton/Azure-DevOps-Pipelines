@@ -2,11 +2,13 @@
 set -o xtrace
 
 echo "$[ContainerName] : "
-echo $[ContainerName]
-echo "$(ContainerName) : "
-echo $(ContainerName)
+echo $CONTAINERNAME
 echo "$[ContainerName] : "
-echo ${{ContainerName}}
+echo $[CONTAINERNAME]
+echo "$(ContainerName) : "
+echo $(CONTAINERNAME)
+echo "$[ContainerName] : "
+echo ${{CONTAINERNAME}}
 
 # Check if sudo lib is installed, if not, install it
 sudo lxc-attach -n ${{ContainerName}} -- bash -c '
