@@ -10,7 +10,7 @@ apt upgrade -y"
 # Check if sudo lib is installed, if not, install it
 sudo lxc-attach -n $CONTAINERNAME -- bash -c "
     set -o xtrace
-    if [[ ! $(dpkg -l ca-certificates | grep ii 2>/dev/null) ]]; then
+    if [[ ! \"$(dpkg -l ca-certificates | grep ii 2>/dev/null)\" ]]; then
         apt install ca-certificates -y
 fi"
 

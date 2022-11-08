@@ -6,7 +6,7 @@ apt update -y
 apt upgrade -y
 
 # Check if sudo lib is installed, if not, install it
-if [[ ! $(dpkg -l ca-certificates | grep ii 2>/dev/null) ]]; then
+if [[ ! "$(dpkg -l ca-certificates | grep ii 2>/dev/null)" ]]; then
     sudo apt install ca-certificates -y
 fi
 
