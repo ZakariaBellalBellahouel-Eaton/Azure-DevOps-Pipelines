@@ -12,7 +12,7 @@ if [ ! \$(id -u $CONTAINERPXMC3000USERNAME 2>/dev/null) ]; then
     useradd -m -d $CONTAINERPXMC3000HOMEFOLDER -p ${env.CONTAINERPXMC3000PASSWORD} -s /bin/bash $CONTAINERPXMC3000USERNAME
 
     # Check if the packages sudo is installed, if not install it and add user to sudoers
-    if [  ! \$(dpkg-query -W -f='${package}\n' sudo 2>/dev/null) ]; then
+    if [  ! \$(dpkg-query -W -f='\${package}\n' sudo 2>/dev/null) ]; then
         apt update
         apt install sudo -y
         # Add $CONTAINERPXMC3000USERNAME to sudoers
@@ -20,7 +20,3 @@ if [ ! \$(id -u $CONTAINERPXMC3000USERNAME 2>/dev/null) ]; then
         echo \"$CONTAINERPXMC3000USERNAME ALL=(ALL) NOPASSWD:ALL\" >> /etc/sudoers
     fi
 fi"
-
-CONTAINERROOTPASSWORD
-ContainerRootPassword
-ContainerPXMC3000Password
