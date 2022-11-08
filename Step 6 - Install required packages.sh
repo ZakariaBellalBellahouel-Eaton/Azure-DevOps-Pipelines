@@ -34,24 +34,6 @@ sudo lxc-attach -n $CONTAINERNAME -- bash -c "
         npm config set cafile $CONTAINERCERTIFICATEDIRECTORY/$CONTAINERCERTIFICATENAME
     fi"
 
-# check if iptables is installed, if not, install it
-sudo lxc-attach -n $CONTAINERNAME -- bash -c "
-    set -o xtrace
-    if [  ! \$(dpkg -l | grep -w iptables | grep ii 2>/dev/null) ]; then
-        sudo apt update -y
-        sudo apt install iptables -y
-    fi"
-
-# check if iptables-persistent is installed, if not, install it
-sudo lxc-attach -n $CONTAINERNAME -- bash -c "
-set -o xtrace
-if [  ! \$(dpkg -l | grep -w iptables-persistent | grep ii 2>/dev/null) ]; then
-    sudo apt update -y
-    echo iptables-persistent iptables-persistent/autosave_v4 boolean true | sudo debconf-set-selections
-    echo iptables-persistent iptables-persistent/autosave_v6 boolean true | sudo debconf-set-selections
-    sudo apt install iptables-persistent -y
-fi"
-
 # Check if node package manager "n" is installed, if not, install it
 sudo lxc-attach -n $CONTAINERNAME -- bash -c "
     set -o xtrace
@@ -76,3 +58,20 @@ sudo lxc-attach -n $CONTAINERNAME -- bash -c "
     set -o xtrace
     cd $CONTAINERWEBSERVERDIRECTORY
     npm install sqlite3 express"
+
+# Required packages to be installed on the host : iptables and iptables-persistent
+# check if iptables is installed, if not, install it
+
+if [  ! $(dpkg -l | grep -w iptables | grep ii 2>/dev/null) ]; then
+    sudo apt update -y
+    sudo apt install iptables -y
+fi
+
+# check if iptables-persistent is installed, if not, install it
+
+if [  ! $(dpkg -l | grep -w iptables-persistent | grep ii 2>/dev/null) ]; then
+    sudo apt update -y
+    echo iptables-persistent iptables-persistent/autosave_v4 boolean true | sudo debconf-set-selections
+    echo iptables-persistent iptables-persistent/autosave_v6 boolean true | sudo debconf-set-selections
+    sudo apt install iptables-persistent -y
+fi
