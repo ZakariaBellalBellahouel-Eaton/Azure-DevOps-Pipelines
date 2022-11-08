@@ -10,12 +10,12 @@ if [[ ! $(dpkg -l lxc | grep ii 2>/dev/null) ]]; then
     
     echo "USE_LXC_BRIDGE=\"true\"" > /etc/default/lxc-net
     echo "" >> /etc/default/lxc-net
-    echo "LXC_BRIDGE=\"lxcbr0\"" >> /etc/default/lxc-net
-    echo "LXC_ADDR=\"10.0.100.1\"" >> /etc/default/lxc-net
-    echo "LXC_NETMASK=\"255.255.255.0\"" >> /etc/default/lxc-net
-    echo "LXC_NETWORK=\"10.0.100.0/24\"" >> /etc/default/lxc-net
-    echo "LXC_DHCP_RANGE=\"10.0.100.100,10.0.100.200\"" >> /etc/default/lxc-net
-    echo "LXC_DHCP_MAX=\"100\"" >> /etc/default/lxc-net
+    echo "LXC_BRIDGE=\"$LXCBRIDGE\"" >> /etc/default/lxc-net
+    echo "LXC_ADDR=\"$LXCADDR\"" >> /etc/default/lxc-net
+    echo "LXC_NETMASK=\"$LXCMASK\"" >> /etc/default/lxc-net
+    echo "LXC_NETWORK=\"$LXCNETWORK\"" >> /etc/default/lxc-net
+    echo "LXC_DHCP_RANGE=\"$LXCDHCPRANGE\"" >> /etc/default/lxc-net
+    echo "LXC_DHCP_MAX=\"$LXCDHCPMAX\"" >> /etc/default/lxc-net
     echo "LXC_DHCP_CONFILE=\"\"" >> /etc/default/lxc-net
     echo "LXC_DOMAIN=\"\"" >> /etc/default/lxc-net
     echo "" >> /etc/default/lxc-net
