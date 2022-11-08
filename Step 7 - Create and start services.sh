@@ -52,7 +52,7 @@ echo \"Alias=$CONTAINERPXMC3000WEBSERVERSERVICENAME.service\" >>  /etc/systemd/s
 echo \"\" >>  /etc/systemd/system/$CONTAINERPXMC3000WEBSERVERSERVICENAME.service
 echo \"[Service]\" >>  /etc/systemd/system/$CONTAINERPXMC3000WEBSERVERSERVICENAME.service
 echo \"Type=simple\" >>  /etc/systemd/system/$CONTAINERPXMC3000WEBSERVERSERVICENAME.service
-echo \"ExecStart=node $CONTAINERWEBSERVERDIRECTORY/$CONTAINERWEBSERVERDIRECTORY.js\" >>  /etc/systemd/system/$CONTAINERPXMC3000WEBSERVERSERVICENAME.service
+echo \"ExecStart=node $CONTAINERWEBSERVERDIRECTORY/$CONTAINERPXMC3000WEBSERVERSERVICENAME.js\" >>  /etc/systemd/system/$CONTAINERPXMC3000WEBSERVERSERVICENAME.service
 echo \"WorkingDirectory=$CONTAINERWEBSERVERDIRECTORY \" >>  /etc/systemd/system/$CONTAINERPXMC3000WEBSERVERSERVICENAME.service
 echo \"#StandardOutput=syslog\" >>  /etc/systemd/system/$CONTAINERPXMC3000WEBSERVERSERVICENAME.service
 echo \"#StandardError=syslog\" >>  /etc/systemd/system/$CONTAINERPXMC3000WEBSERVERSERVICENAME.service
