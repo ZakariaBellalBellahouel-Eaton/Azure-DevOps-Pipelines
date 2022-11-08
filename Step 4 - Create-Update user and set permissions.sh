@@ -3,11 +3,11 @@ set -o xtrace
 
 # Reset root password
 sudo lxc-attach -n $CONTAINERNAME -- bash -c "
-sed -i -e \"s/^root:[^:]\+:/root: ${CONTAINERROOTPASSWORD} :/\" /etc/shadow"
+sed -i -e \"s/^root:[^:]\+:/root: $CONTAINERROOTPASSWORD :/\" /etc/shadow"
 
 # Create new user with the required configuration
 sudo lxc-attach -n $CONTAINERNAME -- bash -c "
-if [ ! $(id -u ${CONTAINERPXMC3000USERNAME} 2>/dev/null)]; then
+if [ ! $(id -u $CONTAINERPXMC3000USERNAME 2>/dev/null) ]; then
 
     useradd -m -d $CONTAINERPXMC3000HOMEFOLDER -p $CONTAINERROOTPASSWORD -s /bin/bash $CONTAINERPXMC3000USERNAME
 

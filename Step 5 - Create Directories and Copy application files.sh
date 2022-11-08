@@ -2,26 +2,26 @@
 set -o xtrace
 
 # Create the application directories
-sudo lxc-attach -n $CONTAINERNAME -- bash -c '
+sudo lxc-attach -n $CONTAINERNAME -- bash -c "
     set -o xtrace
-    if [ ! -d "$CONTAINERDATAAGENTDIRECTORY/bin" ]; then
+    if [ ! -d \"$CONTAINERDATAAGENTDIRECTORY/bin\" ]; then
         install -o $(ContainerPXMC3000Username) -g $(CONTAINERPXMC3000USERNAME)  -d $CONTAINERDATAAGENTDIRECTORY/bin
     fi
-    if [ ! -d "$CONTAINERDATAAGENTDIRECTORY/log" ]; then
+    if [ ! -d \"$CONTAINERDATAAGENTDIRECTORY/log\" ]; then
         install -o $CONTAINERPXMC3000USERNAME -g $CONTAINERPXMC3000USERNAME  -d $CONTAINERDATAAGENTDIRECTORY/log
     fi
-    if [ ! -d "$CONTAINERWEBCLIENTDIRECTORY" ]; then
+    if [ ! -d \"$CONTAINERWEBCLIENTDIRECTORY\" ]; then
         install -o $CONTAINERPXMC3000USERNAME -g $CONTAINERPXMC3000USERNAME  -d $CONTAINERWEBCLIENTDIRECTORY
     fi
-    if [ ! -d "$CONTAINERWEBSERVERDIRECTORY" ]; then
+    if [ ! -d \"$CONTAINERWEBSERVERDIRECTORY\" ]; then
         install -o $CONTAINERPXMC3000USERNAME -g $CONTAINERPXMC3000USERNAME  -d $CONTAINERWEBSERVERDIRECTORY
     fi
-    if [ ! -d "$CONTAINERDATABASEDIRECTORY" ]; then
+    if [ ! -d \"$CONTAINERDATABASEDIRECTORY\" ]; then
         install -o $ContainerPXMC3000Username -g $CONTAINERPXMC3000USERNAME  -d $CONTAINERDATABASEDIRECTORY
     fi
-    if [ ! -d "$CONTAINERCERTIFICATEDIRECTORY" ]; then
+    if [ ! -d \"$CONTAINERCERTIFICATEDIRECTORY\" ]; then
         install -o $CONTAINERPXMC3000USERNAME -g $CONTAINERPXMC3000USERNAME  -d $CONTAINERCERTIFICATEDIRECTORY
-fi'
+    fi"
 
 
 #  Copy PXMC3000-data-agent files
@@ -34,7 +34,7 @@ cp -R $(System.ArtifactsDirectory)/PXMC3000-web-client/PXMC3000-web-client/.  /p
 
 # Set permission
 
-sudo lxc-attach -n $CONTAINERNAME -- bash -c '
+sudo lxc-attach -n $CONTAINERNAME -- bash -c "
     set -o xtrace
     chown -R $CONTAINERPXMC3000USERNAME:$CONTAINERPXMC3000USERNAME $CONTAINERPXMC3000HOMEFOLDER
-chmod -R 744 $CONTAINERPXMC3000HOMEFOLDER'
+chmod -R 744 $CONTAINERPXMC3000HOMEFOLDER"
