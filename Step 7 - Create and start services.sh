@@ -4,7 +4,7 @@ set -o xtrace
 # Install the PXMC3000 data agent service
 #Check if the service is running, if so stop it.
 sudo lxc-attach -n $CONTAINERNAME -- bash -c "
-    if [[ $(systemctl is-active  $CONTAINERPXMC3000DATAAGENTSERVICENAME | grep -w active) ]]; then
+    if [[ \$(systemctl is-active  $CONTAINERPXMC3000DATAAGENTSERVICENAME | grep -w active) ]]; then
         systemctl stop $CONTAINERPXMC3000DATAAGENTSERVICENAME
 fi"
 
@@ -37,7 +37,7 @@ systemctl start $CONTAINERPXMC3000DATAAGENTSERVICENAME.service"
 
 #Check if the service is running, if so stop it.
 sudo lxc-attach -n $CONTAINERNAME -- bash -c "
-    if [[ $(systemctl is-active  $CONTAINERPXMC3000WEBSERVERSERVICENAME | grep -w active) ]]; then
+    if [[ \$(systemctl is-active  $CONTAINERPXMC3000WEBSERVERSERVICENAME | grep -w active) ]]; then
         systemctl stop $CONTAINERPXMC3000WEBSERVERSERVICENAME
     fi"
 
