@@ -47,6 +47,8 @@ sudo lxc-attach -n $CONTAINERNAME -- bash -c "
 set -o xtrace
 if [  ! \$(dpkg -l | grep -w iptables-persistent | grep ii 2>/dev/null) ]; then
     sudo apt update -y
+    echo iptables-persistent iptables-persistent/autosave_v4 boolean true | sudo debconf-set-selections
+    echo iptables-persistent iptables-persistent/autosave_v6 boolean true | sudo debconf-set-selections
     sudo apt install iptables-persistent -y
 fi"
 
