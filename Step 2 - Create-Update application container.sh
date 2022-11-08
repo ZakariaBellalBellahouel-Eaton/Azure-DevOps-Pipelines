@@ -23,8 +23,8 @@ if [[ ! $(dpkg -l lxc | grep ii 2>/dev/null) ]]; then
     echo "#LXC_DHCP_CONFILE=/etc/dnsmasq.conf" >> /etc/default/lxc-net
     
     # restart lxc services
-    service lxc restart
-    service lxc-net  restart
+    sudo service lxc restart
+    sudo service lxc-net  restart
 fi
 
 
