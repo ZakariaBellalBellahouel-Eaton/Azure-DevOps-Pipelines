@@ -5,54 +5,74 @@ set -o xtrace
 
 if [[ ! $(dpkg -l lxc | grep ii 2>/dev/null) ]]; then
     sudo apt install lxc -y
+    
+    # Set the LXC network configuration
+    
+    echo "USE_LXC_BRIDGE=\"true\"" > /etc/default/lxc-net
+    echo "" >> /etc/default/lxc-net
+    echo "LXC_BRIDGE=\"lxcbr0\"" >> /etc/default/lxc-net
+    echo "LXC_ADDR=\"10.0.100.1\"" >> /etc/default/lxc-net
+    echo "LXC_NETMASK=\"255.255.255.0\"" >> /etc/default/lxc-net
+    echo "LXC_NETWORK=\"10.0.100.0/24\"" >> /etc/default/lxc-net
+    echo "LXC_DHCP_RANGE=\"10.0.100.100,10.0.100.200\"" >> /etc/default/lxc-net
+    echo "LXC_DHCP_MAX=\"100\"" >> /etc/default/lxc-net
+    echo "LXC_DHCP_CONFILE=\"\"" >> /etc/default/lxc-net
+    echo "LXC_DOMAIN=\"\"" >> /etc/default/lxc-net
+    echo "" >> /etc/default/lxc-net
+    echo "# Honor system's dnsmasq configuration" >> /etc/default/lxc-net
+    echo "#LXC_DHCP_CONFILE=/etc/dnsmasq.conf" >> /etc/default/lxc-net
+    
+    # restart lxc services
+    service lxc restart
+    service lxc-net  restart
 fi
+
+
 
 #  IMPORTANT : Container application variables should be declared in the pipeline
 
 # Check if the container already exists
 if [[ ! $(sudo lxc-info -n $CONTAINERNAME 2>/dev/null) ]]; then
     sudo lxc-create -n $CONTAINERNAME -t debian -- -r bullseye
-fi
-
-#  IMPORTANT : Container application ip cnfiguration should be declared in the pipeline
-#              if not default configuration will be used 10.0.4.10/24 gateway 10.0.4.1
-
-
-echo "# Set the container configuration" > /var/lib/lxc/$CONTAINERNAME/config
-echo "" >> /var/lib/lxc/$CONTAINERNAME/config
-echo "# Template used to create this container: /usr/share/lxc/templates/lxc-debian" >> /var/lib/lxc/$CONTAINERNAME/config
-echo "# Parameters passed to the template: -r bullseye" >> /var/lib/lxc/$CONTAINERNAME/config
-echo "# For additional config options, please look at lxc.container.conf(5)" >> /var/lib/lxc/$CONTAINERNAME/config
-echo "" >> /var/lib/lxc/$CONTAINERNAME/config
-echo "# Uncomment the following line to support nesting containers:" >> /var/lib/lxc/$CONTAINERNAME/config
-echo "#lxc.include = /usr/share/lxc/config/nesting.conf" >> /var/lib/lxc/$CONTAINERNAME/config
-echo "# (Be aware this has security implications)" >> /var/lib/lxc/$CONTAINERNAME/config
-echo "" >> /var/lib/lxc/$CONTAINERNAME/config
-echo "lxc.net.0.type = veth" >> /var/lib/lxc/$CONTAINERNAME/config
-echo "lxc.net.0.hwaddr = 00:16:3e:" >> /var/lib/lxc/$CONTAINERNAME/config
-echo "lxc.net.0.link = lxcbr0" >> /var/lib/lxc/$CONTAINERNAME/config
-echo "lxc.net.0.flags = up" >> /var/lib/lxc/$CONTAINERNAME/config
-echo "lxc.net.0.ipv4.address = $CONTAINERIPADDRESS/$CONTAINERIPMASK" >> /var/lib/lxc/$CONTAINERNAME/config
-echo "lxc.net.0.ipv4.gateway = $CONTAINERIPGATEWAY" >> /var/lib/lxc/$CONTAINERNAME/config
-echo "lxc.apparmor.profile = generated" >> /var/lib/lxc/$CONTAINERNAME/config
-echo "lxc.apparmor.allow_nesting = 1" >> /var/lib/lxc/$CONTAINERNAME/config
-echo "lxc.rootfs.path = dir:/var/lib/lxc/$CONTAINERNAME/rootfs" >> /var/lib/lxc/$CONTAINERNAME/config
-
-echo "# Common configuration" >> /var/lib/lxc/$CONTAINERNAME/config
-echo "lxc.include = /usr/share/lxc/config/debian.common.conf" >> /var/lib/lxc/$CONTAINERNAME/config
-
-echo "# Container specific configuration" >> /var/lib/lxc/$CONTAINERNAME/config
-echo "lxc.tty.max = 4" >> /var/lib/lxc/$CONTAINERNAME/config
-echo "lxc.uts.name = $CONTAINERNAME" >> /var/lib/lxc/$CONTAINERNAME/config
-echo "lxc.arch = amd64" >> /var/lib/lxc/$CONTAINERNAME/config
-echo "lxc.pty.max = 1024" >> /var/lib/lxc/$CONTAINERNAME/config
-echo "# Container start configuration" >> /var/lib/lxc/$CONTAINERNAME/config
-echo "lxc.start.auto = 1" >> /var/lib/lxc/$CONTAINERNAME/config
-echo "lxc.start.delay = 0" >> /var/lib/lxc/$CONTAINERNAME/config
-
-# Check if the container is started, if yes, stop it.
-if [[ $(sudo lxc-info $CONTAINERNAME -s -H) == "RUNNING" ]]; then
-    sudo lxc-stop $CONTAINERNAME
+    
+    #  IMPORTANT : Container application ip cnfiguration should be declared in the pipeline
+    #              if not default configuration will be used 10.0.4.10/24 gateway 10.0.4.1
+    echo "# Set the container configuration" > /var/lib/lxc/$CONTAINERNAME/config
+    echo "" >> /var/lib/lxc/$CONTAINERNAME/config
+    echo "# Template used to create this container: /usr/share/lxc/templates/lxc-debian" >> /var/lib/lxc/$CONTAINERNAME/config
+    echo "# Parameters passed to the template: -r bullseye" >> /var/lib/lxc/$CONTAINERNAME/config
+    echo "# For additional config options, please look at lxc.container.conf(5)" >> /var/lib/lxc/$CONTAINERNAME/config
+    echo "" >> /var/lib/lxc/$CONTAINERNAME/config
+    echo "# Uncomment the following line to support nesting containers:" >> /var/lib/lxc/$CONTAINERNAME/config
+    echo "#lxc.include = /usr/share/lxc/config/nesting.conf" >> /var/lib/lxc/$CONTAINERNAME/config
+    echo "# (Be aware this has security implications)" >> /var/lib/lxc/$CONTAINERNAME/config
+    echo "" >> /var/lib/lxc/$CONTAINERNAME/config
+    echo "lxc.net.0.type = veth" >> /var/lib/lxc/$CONTAINERNAME/config
+    echo "lxc.net.0.hwaddr = 00:16:3e:" >> /var/lib/lxc/$CONTAINERNAME/config
+    echo "lxc.net.0.link = lxcbr0" >> /var/lib/lxc/$CONTAINERNAME/config
+    echo "lxc.net.0.flags = up" >> /var/lib/lxc/$CONTAINERNAME/config
+    echo "lxc.net.0.ipv4.address = $CONTAINERIPADDRESS/$CONTAINERIPMASK" >> /var/lib/lxc/$CONTAINERNAME/config
+    echo "lxc.net.0.ipv4.gateway = $CONTAINERIPGATEWAY" >> /var/lib/lxc/$CONTAINERNAME/config
+    echo "lxc.apparmor.profile = generated" >> /var/lib/lxc/$CONTAINERNAME/config
+    echo "lxc.apparmor.allow_nesting = 1" >> /var/lib/lxc/$CONTAINERNAME/config
+    echo "lxc.rootfs.path = dir:/var/lib/lxc/$CONTAINERNAME/rootfs" >> /var/lib/lxc/$CONTAINERNAME/config
+    
+    echo "# Common configuration" >> /var/lib/lxc/$CONTAINERNAME/config
+    echo "lxc.include = /usr/share/lxc/config/debian.common.conf" >> /var/lib/lxc/$CONTAINERNAME/config
+    
+    echo "# Container specific configuration" >> /var/lib/lxc/$CONTAINERNAME/config
+    echo "lxc.tty.max = 4" >> /var/lib/lxc/$CONTAINERNAME/config
+    echo "lxc.uts.name = $CONTAINERNAME" >> /var/lib/lxc/$CONTAINERNAME/config
+    echo "lxc.arch = amd64" >> /var/lib/lxc/$CONTAINERNAME/config
+    echo "lxc.pty.max = 1024" >> /var/lib/lxc/$CONTAINERNAME/config
+    echo "# Container start configuration" >> /var/lib/lxc/$CONTAINERNAME/config
+    echo "lxc.start.auto = 1" >> /var/lib/lxc/$CONTAINERNAME/config
+    echo "lxc.start.delay = 0" >> /var/lib/lxc/$CONTAINERNAME/config
+    
+    # Check if the container is started, if yes, stop it.
+    if [[ $(sudo lxc-info $CONTAINERNAME -s -H) == "RUNNING" ]]; then
+        sudo lxc-stop $CONTAINERNAME
+    fi
 fi
 
 # Start the container
