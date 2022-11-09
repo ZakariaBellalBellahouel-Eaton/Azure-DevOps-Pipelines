@@ -25,11 +25,11 @@ sudo lxc-attach -n $CONTAINERNAME -- bash -c "
 
 
 #  Copy PXMC3000-data-agent files
-cp $SYSTEM_ARTIFACTSDIRECTORY/_PXMC3000-data-agent/PXMC3000-data-agent/PXMC3000-data-agent  /proc/$(sudo lxc-info -n $CONTAINERNAME -p -H)/root/$CONTAINERDATAAGENTDIRECTORY/bin/$CONTAINERPXMC3000DATAAGENTSERVICENAME
+cp $SYSTEM_ARTIFACTSDIRECTORY/pxmc3000-artifacts/pxmc3000-data-agent/PXMC3000-data-agent  /proc/$(sudo lxc-info -n $CONTAINERNAME -p -H)/root/$CONTAINERDATAAGENTDIRECTORY/bin/$CONTAINERPXMC3000DATAAGENTSERVICENAME
 # Copy PXMC3000-web-server files
-cp $SYSTEM_ARTIFACTSDIRECTORY/_PXMC3000-web-server/PXMC3000-web-server/PXMC3000-web-server.js  /proc/$(sudo lxc-info -n $CONTAINERNAME -p -H)/root/$CONTAINERWEBSERVERDIRECTORY/$CONTAINERPXMC3000WEBSERVERSERVICENAME.js
+cp $SYSTEM_ARTIFACTSDIRECTORY/pxmc3000-artifacts/pxmc3000-web-server/PXMC3000-web-server.js  /proc/$(sudo lxc-info -n $CONTAINERNAME -p -H)/root/$CONTAINERWEBSERVERDIRECTORY/$CONTAINERPXMC3000WEBSERVERSERVICENAME.js
 # Copy PXMC3000-web-client files
-cp -R $SYSTEM_ARTIFACTSDIRECTORY/_PXMC3000-web-client/PXMC3000-web-client/PXMC3000-web-client/.  /proc/$(sudo lxc-info -n $CONTAINERNAME -p -H)/root/$CONTAINERWEBCLIENTDIRECTORY
+cp -R $SYSTEM_ARTIFACTSDIRECTORY/pxmc3000-artifacts/pxmc3000-web-client/PXMC3000-web-client/.  /proc/$(sudo lxc-info -n $CONTAINERNAME -p -H)/root/$CONTAINERWEBCLIENTDIRECTORY
 
 
 # Set permission
