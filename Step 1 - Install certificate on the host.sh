@@ -2,8 +2,8 @@
 set -o xtrace
 
 # Install updates & upgrades
-apt update -y
-apt upgrade -y
+sudo apt update -y
+sudo apt upgrade -y
 
 # Check if sudo lib is installed, if not, install it
 if [[ ! "$(dpkg -l ca-certificates | grep ii 2>/dev/null)" ]]; then
