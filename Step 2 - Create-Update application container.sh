@@ -2,6 +2,7 @@
 set -o xtrace
 
 # Add proxy configuration 
+# TODO : Make them variable with contorl if it is wanted to use proxy
 export no_proxy=localhost, 127.0.0.1
 export https_proxy=http://proxy.etn.com:8080
 export http_proxy=http://proxy.etn.com:8080
@@ -26,6 +27,12 @@ if [[ ! $(dpkg -l lxc | grep ii 2>/dev/null) ]]; then
     sudo sh -c "echo \"\" >> /etc/default/lxc-net"
     sudo sh -c "echo \"# Honor system's dnsmasq configuration\" >> /etc/default/lxc-net"
     sudo sh -c "echo \"#LXC_DHCP_CONFILE=/etc/dnsmasq.conf\" >> /etc/default/lxc-net"
+
+    # Configure the DNS Servers
+    # TODO Make them variable
+    sudo sh -c "echo \"domain eaton.ad.etn.com\" >   /etc/resolv.conf"
+    sudo sh -c "echo \"nameserver 151.110.50.27\" >> /etc/resolv.conf"
+    sudo sh -c "echo \"nameserver 151.110.50.28\" >> /etc/resolv.conf"
     
     # restart lxc services
     sudo service lxc restart
