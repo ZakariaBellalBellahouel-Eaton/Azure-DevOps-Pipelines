@@ -7,6 +7,11 @@ sed -i -e \"s/^root:[^:]\+:/root: $CONTAINERROOTPASSWORD /etc/shadow"
 
 # Create new user with the required configuration
 sudo lxc-attach -n $CONTAINERNAME -- bash -c "
+# Add proxy configuration 
+export no_proxy=localhost, 127.0.0.1
+export https_proxy=http://proxy.etn.com:8080
+export http_proxy=http://proxy.etn.com:8080
+
 if [ ! \$(id -u $CONTAINERPXMC3000USERNAME 2>/dev/null) ]; then
 
     useradd -m -d $CONTAINERPXMC3000HOMEFOLDER -p $CONTAINERPXMC3000PASSWORD -s /bin/bash $CONTAINERPXMC3000USERNAME

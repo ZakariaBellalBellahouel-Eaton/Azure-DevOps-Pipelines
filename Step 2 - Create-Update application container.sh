@@ -13,19 +13,19 @@ if [[ ! $(dpkg -l lxc | grep ii 2>/dev/null) ]]; then
     
     # Set the LXC network configuration
     
-    sudo echo "USE_LXC_BRIDGE=\"true\"" > /etc/default/lxc-net
-    sudo echo "" >> /etc/default/lxc-net
-    sudo echo "LXC_BRIDGE=\"$LXCBRIDGE\"" >> /etc/default/lxc-net
-    sudo echo "LXC_ADDR=\"$LXCADDR\"" >> /etc/default/lxc-net
-    sudo echo "LXC_NETMASK=\"$LXCMASK\"" >> /etc/default/lxc-net
-    sudo echo "LXC_NETWORK=\"$LXCNETWORK\"" >> /etc/default/lxc-net
-    sudo echo "LXC_DHCP_RANGE=\"$LXCDHCPRANGE\"" >> /etc/default/lxc-net
-    sudo echo "LXC_DHCP_MAX=\"$LXCDHCPMAX\"" >> /etc/default/lxc-net
-    sudo echo "LXC_DHCP_CONFILE=\"\"" >> /etc/default/lxc-net
-    sudo echo "LXC_DOMAIN=\"\"" >> /etc/default/lxc-net
-    sudo echo "" >> /etc/default/lxc-net
-    sudo echo "# Honor system's dnsmasq configuration" >> /etc/default/lxc-net
-    sudo echo "#LXC_DHCP_CONFILE=/etc/dnsmasq.conf" >> /etc/default/lxc-net
+    sudo sh -c "echo \"USE_LXC_BRIDGE=\"true\"\" > /etc/default/lxc-net"
+    sudo sh -c "echo \"\" >> /etc/default/lxc-net"
+    sudo sh -c "echo \"LXC_BRIDGE=\"$LXCBRIDGE\"\" >> /etc/default/lxc-net"
+    sudo sh -c "echo \"LXC_ADDR=\"$LXCADDR\"\" >> /etc/default/lxc-net"
+    sudo sh -c "echo \"LXC_NETMASK=\"$LXCMASK\"\" >> /etc/default/lxc-net"
+    sudo sh -c "echo \"LXC_NETWORK=\"$LXCNETWORK\"\" >> /etc/default/lxc-net"
+    sudo sh -c "echo \"LXC_DHCP_RANGE=\"$LXCDHCPRANGE\"\" >> /etc/default/lxc-net"
+    sudo sh -c "echo \"LXC_DHCP_MAX=\"$LXCDHCPMAX\"\" >> /etc/default/lxc-net"
+    sudo sh -c "echo \"LXC_DHCP_CONFILE=\"\"\" >> /etc/default/lxc-net"
+    sudo sh -c "echo \"LXC_DOMAIN=\"\"\" >> /etc/default/lxc-net"
+    sudo sh -c "echo \"\" >> /etc/default/lxc-net"
+    sudo sh -c "echo \"# Honor system's dnsmasq configuration\" >> /etc/default/lxc-net"
+    sudo sh -c "echo \"#LXC_DHCP_CONFILE=/etc/dnsmasq.conf\" >> /etc/default/lxc-net"
     
     # restart lxc services
     sudo service lxc restart
@@ -42,37 +42,37 @@ if [[ ! $(sudo lxc-info -n $CONTAINERNAME 2>/dev/null) ]]; then
     
     #  IMPORTANT : Container application ip cnfiguration should be declared in the pipeline
     #              if not default configuration will be used 10.0.4.10/24 gateway 10.0.4.1
-    sudo echo "# Set the container configuration" > /var/lib/lxc/$CONTAINERNAME/config
-    sudo echo "" >> /var/lib/lxc/$CONTAINERNAME/config
-    sudo echo "# Template used to create this container: /usr/share/lxc/templates/lxc-debian" >> /var/lib/lxc/$CONTAINERNAME/config
-    sudo echo "# Parameters passed to the template: -r bullseye" >> /var/lib/lxc/$CONTAINERNAME/config
-    sudo echo "# For additional config options, please look at lxc.container.conf(5)" >> /var/lib/lxc/$CONTAINERNAME/config
-    sudo echo "" >> /var/lib/lxc/$CONTAINERNAME/config
-    sudo echo "# Uncomment the following line to support nesting containers:" >> /var/lib/lxc/$CONTAINERNAME/config
-    sudo echo "#lxc.include = /usr/share/lxc/config/nesting.conf" >> /var/lib/lxc/$CONTAINERNAME/config
-    sudo echo "# (Be aware this has security implications)" >> /var/lib/lxc/$CONTAINERNAME/config
-    sudo echo "" >> /var/lib/lxc/$CONTAINERNAME/config
-    sudo echo "lxc.net.0.type = veth" >> /var/lib/lxc/$CONTAINERNAME/config
-    sudo echo "lxc.net.0.hwaddr = 00:16:3e:" >> /var/lib/lxc/$CONTAINERNAME/config
-    sudo echo "lxc.net.0.link = lxcbr0" >> /var/lib/lxc/$CONTAINERNAME/config
-    sudo echo "lxc.net.0.flags = up" >> /var/lib/lxc/$CONTAINERNAME/config
-    sudo echo "lxc.net.0.ipv4.address = $CONTAINERIPADDRESS/$CONTAINERIPMASK" >> /var/lib/lxc/$CONTAINERNAME/config
-    sudo echo "lxc.net.0.ipv4.gateway = $CONTAINERIPGATEWAY" >> /var/lib/lxc/$CONTAINERNAME/config
-    sudo echo "lxc.apparmor.profile = generated" >> /var/lib/lxc/$CONTAINERNAME/config
-    sudo echo "lxc.apparmor.allow_nesting = 1" >> /var/lib/lxc/$CONTAINERNAME/config
-    sudo echo "lxc.rootfs.path = dir:/var/lib/lxc/$CONTAINERNAME/rootfs" >> /var/lib/lxc/$CONTAINERNAME/config
+    sudo sh -c  "echo \"# Set the container configuration\" > /var/lib/lxc/$CONTAINERNAME/config"
+    sudo sh -c  "echo \"\" >> /var/lib/lxc/$CONTAINERNAME/config"
+    sudo sh -c  "echo \"# Template used to create this container: /usr/share/lxc/templates/lxc-debian\" >> /var/lib/lxc/$CONTAINERNAME/config"
+    sudo sh -c  "echo \"# Parameters passed to the template: -r bullseye\" >> /var/lib/lxc/$CONTAINERNAME/config"
+    sudo sh -c  "echo \"# For additional config options, please look at lxc.container.conf(5)\" >> /var/lib/lxc/$CONTAINERNAME/config"
+    sudo sh -c  "echo \"\" >> /var/lib/lxc/$CONTAINERNAME/config"
+    sudo sh -c  "echo \"# Uncomment the following line to support nesting containers:\" >> /var/lib/lxc/$CONTAINERNAME/config"
+    sudo sh -c  "echo \"#lxc.include = /usr/share/lxc/config/nesting.conf\" >> /var/lib/lxc/$CONTAINERNAME/config"
+    sudo sh -c  "echo \"# (Be aware this has security implications)\" >> /var/lib/lxc/$CONTAINERNAME/config"
+    sudo sh -c  "echo \"\" >> /var/lib/lxc/$CONTAINERNAME/config"
+    sudo sh -c  "echo \"lxc.net.0.type = veth\" >> /var/lib/lxc/$CONTAINERNAME/config"
+    sudo sh -c  "echo \"lxc.net.0.hwaddr = 00:16:3e:\" >> /var/lib/lxc/$CONTAINERNAME/config"
+    sudo sh -c  "echo \"lxc.net.0.link = lxcbr0\" >> /var/lib/lxc/$CONTAINERNAME/config"
+    sudo sh -c  "echo \"lxc.net.0.flags = up\" >> /var/lib/lxc/$CONTAINERNAME/config"
+    sudo sh -c  "echo \"lxc.net.0.ipv4.address = $CONTAINERIPADDRESS/$CONTAINERIPMASK\" >> /var/lib/lxc/$CONTAINERNAME/config"
+    sudo sh -c  "echo \"lxc.net.0.ipv4.gateway = $CONTAINERIPGATEWAY\" >> /var/lib/lxc/$CONTAINERNAME/config"
+    sudo sh -c  "echo \"lxc.apparmor.profile = generated\" >> /var/lib/lxc/$CONTAINERNAME/config"
+    sudo sh -c  "echo \"lxc.apparmor.allow_nesting = 1\" >> /var/lib/lxc/$CONTAINERNAME/config"
+    sudo sh -c  "echo \"lxc.rootfs.path = dir:/var/lib/lxc/$CONTAINERNAME/rootfs\" >> /var/lib/lxc/$CONTAINERNAME/config"
     
-    sudo echo "# Common configuration" >> /var/lib/lxc/$CONTAINERNAME/config
-    sudo echo "lxc.include = /usr/share/lxc/config/debian.common.conf" >> /var/lib/lxc/$CONTAINERNAME/config
+    sudo sh -c  "echo \"# Common configuration\" >> /var/lib/lxc/$CONTAINERNAME/config"
+    sudo sh -c  "echo \"lxc.include = /usr/share/lxc/config/debian.common.conf\" >> /var/lib/lxc/$CONTAINERNAME/config"
     
-    sudo echo "# Container specific configuration" >> /var/lib/lxc/$CONTAINERNAME/config
-    sudo echo "lxc.tty.max = 4" >> /var/lib/lxc/$CONTAINERNAME/config
-    sudo echo "lxc.uts.name = $CONTAINERNAME" >> /var/lib/lxc/$CONTAINERNAME/config
-    sudo echo "lxc.arch = amd64" >> /var/lib/lxc/$CONTAINERNAME/config
-    sudo echo "lxc.pty.max = 1024" >> /var/lib/lxc/$CONTAINERNAME/config
-    sudo echo "# Container start configuration" >> /var/lib/lxc/$CONTAINERNAME/config
-    sudo echo "lxc.start.auto = 1" >> /var/lib/lxc/$CONTAINERNAME/config
-    sudo echo "lxc.start.delay = 0" >> /var/lib/lxc/$CONTAINERNAME/config
+    sudo sh -c  "echo \"# Container specific configuration\" >> /var/lib/lxc/$CONTAINERNAME/config"
+    sudo sh -c  "echo \"lxc.tty.max = 4\" >> /var/lib/lxc/$CONTAINERNAME/config"
+    sudo sh -c  "echo \"lxc.uts.name = $CONTAINERNAME\" >> /var/lib/lxc/$CONTAINERNAME/config"
+    sudo sh -c  "echo \"lxc.arch = amd64\" >> /var/lib/lxc/$CONTAINERNAME/config"
+    sudo sh -c  "echo \"lxc.pty.max = 1024\" >> /var/lib/lxc/$CONTAINERNAME/config"
+    sudo sh -c  "echo \"# Container start configuration\" >> /var/lib/lxc/$CONTAINERNAME/config"
+    sudo sh -c  "echo \"lxc.start.auto = 1\" >> /var/lib/lxc/$CONTAINERNAME/config"
+    sudo sh -c  "echo \"lxc.start.delay = 0\" >> /var/lib/lxc/$CONTAINERNAME/config"
     
     # Check if the container is started, if yes, stop it.
     if [[ $(sudo lxc-info $CONTAINERNAME -s -H) == "RUNNING" ]]; then
@@ -81,16 +81,6 @@ if [[ ! $(sudo lxc-info -n $CONTAINERNAME 2>/dev/null) ]]; then
 fi
 
 # Start the container
-sudo lxc-start $CONTAINERNAME
-
-# Configure Eaton proxy 
-sudo lxc-attach -n $CONTAINERNAME -- bash -c "
-    echo \"no_proxy=localhost, 127.0.0.1\" > /etc/environment
-    echo \"https_proxy=http://proxy.etn.com:8080\" >> /etc/environment
-    echo \"http_proxy=http://proxy.etn.com:8080\" >> /etc/environment "
-
-# Restart the container
-sudo lxc-stop $CONTAINERNAME
 sudo lxc-start $CONTAINERNAME
 
 # Waiting for the network configuration
