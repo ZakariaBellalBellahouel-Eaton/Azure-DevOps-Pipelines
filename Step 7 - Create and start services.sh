@@ -1,11 +1,6 @@
 # Activate command print
 set -o xtrace
 
-# Add proxy configuration 
-export no_proxy=localhost, 127.0.0.1
-export https_proxy=http://proxy.etn.com:8080
-export http_proxy=http://proxy.etn.com:8080
-
 # Install the PXMC3000 data agent service
 #Check if the service is running, if so stop it.
 sudo lxc-attach -n $CONTAINERNAME -- bash -c "

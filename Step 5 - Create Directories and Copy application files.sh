@@ -1,11 +1,6 @@
 # Activate command print
 set -o xtrace
 
-# Add proxy configuration 
-export no_proxy=localhost, 127.0.0.1
-export https_proxy=http://proxy.etn.com:8080
-export http_proxy=http://proxy.etn.com:8080
-
 # Create the application directories
 sudo lxc-attach -n $CONTAINERNAME -- bash -c "
     set -o xtrace
@@ -30,11 +25,11 @@ sudo lxc-attach -n $CONTAINERNAME -- bash -c "
 
 
 #  Copy PXMC3000-data-agent files
-cp $SYSTEM_ARTIFACTSDIRECTORY/pxmc3000-artifacts/pxmc3000-data-agent/PXMC3000-data-agent  /proc/$(sudo lxc-info -n $CONTAINERNAME -p -H)/root/$CONTAINERDATAAGENTDIRECTORY/bin/$CONTAINERPXMC3000DATAAGENTSERVICENAME
+sudo cp $SYSTEM_ARTIFACTSDIRECTORY/pxmc3000-artifacts/pxmc3000-data-agent/PXMC3000-data-agent  /proc/$(sudo lxc-info -n $CONTAINERNAME -p -H)/root/$CONTAINERDATAAGENTDIRECTORY/bin/$CONTAINERPXMC3000DATAAGENTSERVICENAME
 # Copy PXMC3000-web-server files
-cp $SYSTEM_ARTIFACTSDIRECTORY/pxmc3000-artifacts/pxmc3000-web-server/PXMC3000-web-server.js  /proc/$(sudo lxc-info -n $CONTAINERNAME -p -H)/root/$CONTAINERWEBSERVERDIRECTORY/$CONTAINERPXMC3000WEBSERVERSERVICENAME.js
+sudo cp $SYSTEM_ARTIFACTSDIRECTORY/pxmc3000-artifacts/pxmc3000-web-server/PXMC3000-web-server.js  /proc/$(sudo lxc-info -n $CONTAINERNAME -p -H)/root/$CONTAINERWEBSERVERDIRECTORY/$CONTAINERPXMC3000WEBSERVERSERVICENAME.js
 # Copy PXMC3000-web-client files
-cp -R $SYSTEM_ARTIFACTSDIRECTORY/pxmc3000-artifacts/pxmc3000-web-client/PXMC3000-web-client/.  /proc/$(sudo lxc-info -n $CONTAINERNAME -p -H)/root/$CONTAINERWEBCLIENTDIRECTORY
+sudo cp -R $SYSTEM_ARTIFACTSDIRECTORY/pxmc3000-artifacts/pxmc3000-web-client/PXMC3000-web-client/.  /proc/$(sudo lxc-info -n $CONTAINERNAME -p -H)/root/$CONTAINERWEBCLIENTDIRECTORY
 
 
 # Set permission

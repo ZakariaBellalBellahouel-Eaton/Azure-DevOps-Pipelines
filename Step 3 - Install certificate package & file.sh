@@ -1,11 +1,6 @@
 # Activate command print
 set -o xtrace
 
-# Add proxy configuration 
-export no_proxy=localhost, 127.0.0.1
-export https_proxy=http://proxy.etn.com:8080
-export http_proxy=http://proxy.etn.com:8080
-
 # Install updates & upgrades
 sudo lxc-attach -n $CONTAINERNAME -- bash -c "
 set -o xtrace
