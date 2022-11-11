@@ -54,7 +54,7 @@ if [[ ! $(sudo lxc-info -n $CONTAINERNAME 2>/dev/null) ]]; then
     sudo sh -c  "echo \"# (Be aware this has security implications)\" >> /var/lib/lxc/$CONTAINERNAME/config"
     sudo sh -c  "echo \"\" >> /var/lib/lxc/$CONTAINERNAME/config"
     sudo sh -c  "echo \"lxc.net.0.type = veth\" >> /var/lib/lxc/$CONTAINERNAME/config"
-    sudo sh -c  "echo \"lxc.net.0.hwaddr = 00:16:3e:\" >> /var/lib/lxc/$CONTAINERNAME/config"
+    sudo sh -c  "echo \"lxc.net.0.hwaddr = $CONTAINERNETWORKMACADDRESS \" >> /var/lib/lxc/$CONTAINERNAME/config"
     sudo sh -c  "echo \"lxc.net.0.link = lxcbr0\" >> /var/lib/lxc/$CONTAINERNAME/config"
     sudo sh -c  "echo \"lxc.net.0.flags = up\" >> /var/lib/lxc/$CONTAINERNAME/config"
     sudo sh -c  "echo \"lxc.net.0.ipv4.address = $CONTAINERIPADDRESS/$CONTAINERIPMASK\" >> /var/lib/lxc/$CONTAINERNAME/config"
