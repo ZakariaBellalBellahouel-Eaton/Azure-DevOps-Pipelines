@@ -2,9 +2,9 @@
 set -o xtrace
 
 # Add proxy configuration 
-sudo export no_proxy=localhost, 127.0.0.1
-sudo export https_proxy=http://proxy.etn.com:8080
-sudo export http_proxy=http://proxy.etn.com:8080
+sudo echo "export no_proxy=localhost, 127.0.0.1" > /etc/environment
+sudo echo "export https_proxy=http://proxy.etn.com:8080" >> /etc/environment
+sudo echo "export http_proxy=http://proxy.etn.com:8080" >> /etc/environment
 
 # Install updates & upgrades
 sudo apt update -y
