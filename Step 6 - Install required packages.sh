@@ -55,9 +55,9 @@ sudo lxc-attach -n $CONTAINERNAME -- bash -c "
         npm install -g serve
     fi"
 
-#Set the certificate for npm
+# Temporary workaround
 sudo lxc-attach -n $CONTAINERNAME -- bash -c "
-    npm config set cafile /usr/local/share/pxmc3000/certificates/Eaton_root_ca_2.crt"
+    npm config set strict-ssl false
 
 sudo lxc-attach -n $CONTAINERNAME -- bash -c "
     # Upgrade Node & Npm & Npx to the lastest stable version
