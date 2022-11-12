@@ -4,7 +4,10 @@ set -o xtrace
 # Check if sudo lib is installed, if not, install it
 sudo lxc-attach -n $CONTAINERNAME -- bash -c "
     set -o xtrace
-
+    
+    apt update -y
+    apt upgrade -y
+    
     if [  ! \$(dpkg -l | grep -w rsyslog | grep ii 2>/dev/null) ]; then
         sudo apt update -y
         sudo apt install rsyslog -y
