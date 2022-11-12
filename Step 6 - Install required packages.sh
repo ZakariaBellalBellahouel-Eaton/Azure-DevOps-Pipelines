@@ -7,12 +7,14 @@ sudo lxc-attach -n $CONTAINERNAME -- bash -c "
     
     apt update -y
     apt upgrade -y
-    
+
     if [  ! \$(dpkg -l | grep -w rsyslog | grep ii 2>/dev/null) ]; then
         sudo apt update -y
         sudo apt install rsyslog -y
-    fi
+    fi"
 
+# Check if sudo lib is installed, if not, install it
+sudo lxc-attach -n $CONTAINERNAME -- bash -c "
     # Check if curl lib is installed, if not, install it
     if [  ! /$(dpkg -l | grep -w libcurl4-openssl-dev | grep ii 2>/dev/null) ]; then
         sudo apt update -y
