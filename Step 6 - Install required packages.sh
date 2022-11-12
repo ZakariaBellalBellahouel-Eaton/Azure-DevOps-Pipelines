@@ -1,49 +1,55 @@
 # Activate command print
 set -o xtrace
 
-# Check if sudo lib is installed, if not, install it
+# Install updates & upgrades
 sudo lxc-attach -n $CONTAINERNAME -- bash -c "
     set -o xtrace
     
     apt update -y
-    apt upgrade -y
+    apt upgrade -y"
 
+# Check if rsyslog lib is installed, if not, install it
+sudo lxc-attach -n $CONTAINERNAME -- bash -c "
     if [  ! \$(dpkg -l | grep -w rsyslog | grep ii 2>/dev/null) ]; then
         sudo apt update -y
         sudo apt install rsyslog -y
     fi"
 
-# Check if sudo lib is installed, if not, install it
 sudo lxc-attach -n $CONTAINERNAME -- bash -c "
     # Check if curl lib is installed, if not, install it
     if [  ! /$(dpkg -l | grep -w libcurl4-openssl-dev | grep ii 2>/dev/null) ]; then
         sudo apt update -y
         sudo apt install libcurl4-openssl-dev -y
-    fi
+    fi"
 
+sudo lxc-attach -n $CONTAINERNAME -- bash -c "
     # Check if curl lib is installed, if not, install it ( required for npm )
     if [  ! \$(dpkg -l | grep -w curl | grep ii 2>/dev/null) ]; then
         sudo apt update -y
         sudo apt install curl -y
-    fi
+    fi"
 
+sudo lxc-attach -n $CONTAINERNAME -- bash -c "
     # Check if npm  is installed, if not, install it
     if [  ! \$(dpkg -l | grep -w npm | grep ii 2>/dev/null) ]; then
         sudo apt update -y
         sudo apt install npm -y
         npm config set cafile $CONTAINERCERTIFICATEDIRECTORY/$CONTAINERCERTIFICATENAME
-    fi
+    fi"
 
+sudo lxc-attach -n $CONTAINERNAME -- bash -c "
     # Check if node package manager "n" is installed, if not, install it
     if [  ! \$(npm list -g | grep n@ 2>/dev/null) ]; then
         npm install -g n
-    fi
+    fi"
 
+sudo lxc-attach -n $CONTAINERNAME -- bash -c "
     # Check if serve is installed, if not, install it
     if [  ! \$(npm list -g | grep serve@ 2>/dev/null) ]; then
         npm install -g serve
-    fi
+    fi"
 
+sudo lxc-attach -n $CONTAINERNAME -- bash -c "
     # Upgrade Node & Npm & Npx to the lastest stable version
     n stable
 
