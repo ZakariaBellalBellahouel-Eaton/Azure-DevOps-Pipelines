@@ -1,6 +1,12 @@
 # Activate command print
 set -o xtrace
 
+# Set proxy configuration for APT
+sudo lxc-attach -n $CONTAINERNAME -- bash -c "
+echo 'Acquire::http::Proxy \"http://proxy.etn.com:8080;\"' > /etc/apt/apt.conf.d/proxy.conf
+echo 'Acquire::https::Proxy \"http://proxy.etn.com:8080;\"' >> /etc/apt/apt.conf.d/proxy.conf
+"
+
 # Install updates & upgrades
 sudo lxc-attach -n $CONTAINERNAME -- bash -c "
     set -o xtrace
