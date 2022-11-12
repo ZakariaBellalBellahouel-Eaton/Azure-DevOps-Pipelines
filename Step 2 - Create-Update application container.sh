@@ -1,12 +1,6 @@
 # Activate command print
 set -o xtrace
 
-# Add proxy configuration 
-# TODO : Make them variable with contorl if it is wanted to use proxy
-export no_proxy=localhost, 127.0.0.1
-export https_proxy=http://proxy.etn.com:8080
-export http_proxy=http://proxy.etn.com:8080
-
 #Check if the LXC container is installed, if not install
 
 if [[ ! $(dpkg -l lxc | grep ii 2>/dev/null) ]]; then
