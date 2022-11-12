@@ -57,7 +57,7 @@ sudo lxc-attach -n $CONTAINERNAME -- bash -c "
 
 # Temporary workaround
 sudo lxc-attach -n $CONTAINERNAME -- bash -c "
-    npm config set strict-ssl false
+    npm config set strict-ssl false"
 
 sudo lxc-attach -n $CONTAINERNAME -- bash -c "
     # Upgrade Node & Npm & Npx to the lastest stable version
