@@ -50,19 +50,9 @@ sudo lxc-attach -n $CONTAINERNAME -- bash -c "
     fi"
 
 sudo lxc-attach -n $CONTAINERNAME -- bash -c "
-    # Check if serve is installed, if not, install it
-    if [  ! \$(npm list -g | grep serve@ 2>/dev/null) ]; then
-        npm install -g serve
-    fi"
-
-# Temporary workaround
-sudo lxc-attach -n $CONTAINERNAME -- bash -c "
-    npm config set strict-ssl false"
-
-sudo lxc-attach -n $CONTAINERNAME -- bash -c "
     # Upgrade Node & Npm & Npx to the lastest stable version
     n stable
-
+    hash -r
     # Install required local npm package
     cd $CONTAINERWEBSERVERDIRECTORY
     npm install sqlite3 express"

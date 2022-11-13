@@ -17,7 +17,7 @@ sudo lxc-attach -n $CONTAINERNAME -- bash -c "
 
 # Install caCopy the Eaton certificate and loadit
 sudo cp $EATONCERTIFICATE_SECUREFILEPATH  /proc/$(sudo lxc-info -n $CONTAINERNAME -p -H)/root/usr/local/share/ca-certificates/
-sudo mkdir /proc/$(sudo lxc-info -n $CONTAINERNAME -p -H)/root/$CONTAINERCERTIFICATEDIRECTORY
+sudo mkdir -p /proc/$(sudo lxc-info -n $CONTAINERNAME -p -H)/root/$CONTAINERCERTIFICATEDIRECTORY
 sudo cp $EATONCERTIFICATE_SECUREFILEPATH  /proc/$(sudo lxc-info -n $CONTAINERNAME -p -H)/root/$CONTAINERCERTIFICATEDIRECTORY
 sudo lxc-attach -n $CONTAINERNAME -- bash -c "
     set -o xtrace
