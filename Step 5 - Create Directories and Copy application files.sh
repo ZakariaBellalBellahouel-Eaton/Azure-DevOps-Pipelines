@@ -29,7 +29,7 @@ sudo cp $SYSTEM_ARTIFACTSDIRECTORY/pxmc3000-artifacts/pxmc3000-data-agent/pxmc30
 # Copy PXMC3000-web-server files
 sudo cp $SYSTEM_ARTIFACTSDIRECTORY/pxmc3000-artifacts/pxmc3000-web-server/pxmc3000-web-server.js  /proc/$(sudo lxc-info -n $CONTAINERNAME -p -H)/root/$CONTAINERWEBSERVERDIRECTORY/$CONTAINERPXMC3000WEBSERVERSERVICENAME.js
 # Copy PXMC3000-web-client files
-sudo cp -R $SYSTEM_ARTIFACTSDIRECTORY/pxmc3000-artifacts/pxmc3000-web-client/pxmc3000-web-client/.  /proc/$(sudo lxc-info -n $CONTAINERNAME -p -H)/root/$CONTAINERWEBCLIENTDIRECTORY
+sudo cp -R $SYSTEM_ARTIFACTSDIRECTORY/pxmc3000-artifacts/pxmc3000-web-client/.  /proc/$(sudo lxc-info -n $CONTAINERNAME -p -H)/root/$CONTAINERWEBCLIENTDIRECTORY
 
 
 # Set permission
