@@ -41,6 +41,8 @@ sudo lxc-attach -n $CONTAINERNAME -- bash -c "
         sudo apt update -y
         sudo apt install npm -y
         npm config set cafile $CONTAINERCERTIFICATEDIRECTORY/$CONTAINERCERTIFICATENAME
+        # Temporary workaround
+        npm config set strict-ssl  false
     fi"
 
 sudo lxc-attach -n $CONTAINERNAME -- bash -c "
