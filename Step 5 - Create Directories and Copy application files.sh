@@ -16,6 +16,9 @@ sudo lxc-attach -n $CONTAINERNAME -- bash -c "
     if [ ! -d \"$CONTAINERWEBSERVERDIRECTORY\" ]; then
         install -o $CONTAINERPXMC3000USERNAME -g $CONTAINERPXMC3000USERNAME  -d $CONTAINERWEBSERVERDIRECTORY
     fi
+    if [ ! -d \"$CONTAINERWEBSERVERDOTNETDIRECTORY\" ]; then
+        install -o $CONTAINERPXMC3000USERNAME -g $CONTAINERPXMC3000USERNAME  -d $CONTAINERWEBSERVERDOTNETDIRECTORY
+    fi
     if [ ! -d \"$CONTAINERDATABASEDIRECTORY\" ]; then
         install -o $CONTAINERPXMC3000USERNAME -g $CONTAINERPXMC3000USERNAME  -d $CONTAINERDATABASEDIRECTORY
     fi
@@ -30,6 +33,9 @@ sudo cp $SYSTEM_ARTIFACTSDIRECTORY/pxmc3000-artifacts/pxmc3000-data-agent/pxmc30
 sudo cp $SYSTEM_ARTIFACTSDIRECTORY/pxmc3000-artifacts/pxmc3000-web-server/pxmc3000-web-server.js  /proc/$(sudo lxc-info -n $CONTAINERNAME -p -H)/root/$CONTAINERWEBSERVERDIRECTORY/$CONTAINERPXMC3000WEBSERVERSERVICENAME.js
 # Copy PXMC3000-web-client files
 sudo cp -R $SYSTEM_ARTIFACTSDIRECTORY/pxmc3000-artifacts/pxmc3000-web-client/.  /proc/$(sudo lxc-info -n $CONTAINERNAME -p -H)/root/$CONTAINERWEBCLIENTDIRECTORY
+# Copy PXMC3000-web-server-dotnet files
+sudo unzip $SYSTEM_ARTIFACTSDIRECTORY/pxmc3000-artifacts/pxmc3000-web-server-dotnet/pxmc3000-web-server.zip -d /proc/$(sudo lxc-info -n $CONTAINERNAME -p -H)/root/$CONTAINERWEBSERVERDOTNETDIRECTORY
+
 
 
 # Set permission
